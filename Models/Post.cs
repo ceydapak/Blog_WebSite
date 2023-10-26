@@ -6,7 +6,7 @@
         public string? Title { get; set; }
         public string? ShortDescription { get; set; }
         public string? AppUserId { get; set; }
-        public AppUser AppUser { get; set; }    
+        public AppUser? AppUser { get; set; }    
         public DateTime CreationTime { get; set; } = DateTime.Now;
         public string? Description { get; set; }
         public string? Slug { get; set; }

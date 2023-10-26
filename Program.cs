@@ -1,10 +1,19 @@
+using Blog_WebSite.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(conn));
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<DBContext>().AddDefaultTokenProviders();
+builder.Services.AddScoped<IDbInitializer,DbInitializer>();   
+
 
 var app = builder.Build();
-
+DataSeeding();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -25,3 +34,12 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void DataSeeding()
+{
+    using(var scope = app.Services.CreateScope())
+    {
+        var DbInitilize = scope.ServiceProvider.GetService<IDbInitializer>();
+        DbInitilize.Initialize();
+    }
+}
