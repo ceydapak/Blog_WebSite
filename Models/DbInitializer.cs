@@ -22,13 +22,13 @@ namespace Blog_WebSite.Models
                 _roleManager.CreateAsync(new IdentityRole(Roles.Author)).GetAwaiter().GetResult();
                 _userManager.CreateAsync(new AppUser()
                 {
-                    UserName = "admin@gmail.com",
+                    UserName = "adminov@gmail.com",
                     Email="admin@gmail.com",
                     Name= "Admin",
                     LastName="Adminov"
-                }, "Ad12346").Wait();
+                }, "Ad2346").Wait();
 
-                var user1 = _context.AppUsers!.FirstOrDefault(u=> u.Email=="admin@gmail.com");
+                var user1 = _context.AppUsers!.FirstOrDefault(u => u.Email=="admin@gmail.com");
                 if (user1 != null)
                 {
                     _userManager.AddToRoleAsync(user1, Roles.Admin).GetAwaiter().GetResult();
