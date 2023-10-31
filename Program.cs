@@ -1,5 +1,6 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
+using Blog_WebSite.Initializerss;
 using Blog_WebSite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,13 @@ builder.Services.AddControllersWithViews();
 var conn = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(conn));
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<DBContext>().AddDefaultTokenProviders();
-builder.Services.AddScoped<IDbInitializer,DbInitializer>();   
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();  
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
 var app = builder.Build();
+
 DataSeeding();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -44,9 +47,9 @@ app.Run();
 
 void DataSeeding()
 {
-    using(var scope = app.Services.CreateScope())
+    using (var scope = app.Services.CreateScope())
     {
-        var DbInitilize = scope.ServiceProvider.GetService<IDbInitializer>();
-        DbInitilize.Initialize();
+        var DbInitialize = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        DbInitialize.Initialize();
     }
 }
