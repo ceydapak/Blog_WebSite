@@ -37,7 +37,6 @@
       
 
     @RenderBody()
-    @await Component.InvokeAsync("Notyf")
 
     <!-- Footer-->
         <footer class="border-top">
@@ -79,7 +78,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="~/blog/js/scripts.js"></script>
+    @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
+ 
 
     </body>
 </html>

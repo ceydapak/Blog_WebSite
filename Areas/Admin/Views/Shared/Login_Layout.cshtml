@@ -31,7 +31,7 @@
         @RenderBody()
 
     </div>
-    @await Component.InvokeAsync("Notyf")
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/dashboard/vendor/jquery/jquery.min.js"></script>
@@ -43,6 +43,7 @@
     <!-- Custom scripts for all pages-->
     <script src="~/dashboard/js/sb-admin-2.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
 
 </body>
 
