@@ -1,6 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Blog_WebSite.Models;
 using Blog_WebSite.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,15 +23,25 @@ namespace Blog_WebSite.Areas.Admin.Controllers
         
         
         }
-        public IActionResult Index()
+        [Authorize (Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var users = await _userManager.Users.ToListAsync();
+            var vm = users.Select(x => new UserVM
+            {
+                Id = x.Id,
+                Name = x.Name,
+                LastName = x.LastName,
+                UserName = x.UserName,
+            }).ToList();
+            return View(vm);
         }
 
         [HttpGet("Login")]
         public IActionResult Login()
         {
-            if(!HttpContext.User.Identity.IsAuthenticated) {
+            if(!HttpContext.User.Identity!.IsAuthenticated) {
                 return View(new LoginVM());
             }
             return RedirectToAction("Index", "User", new { area = "Admin" });   

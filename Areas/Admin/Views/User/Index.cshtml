@@ -1,12 +1,52 @@
-﻿
+﻿@model List<Blog_WebSite.ViewModel.UserVM>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Users";
 }
 
 
-<div class="container-fluid">
+<div class="container-fluid" >
+    <a class="btn btn-success mb-1">
+        Add User
+    </a>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Users List</h5>
+        </div>
 
-    <h2>User Dashboard</h2>
+        <div class="card-body">
+            <table class="table table-striped table-hover" id="mytable">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>User Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Name</td>
+                            <td>@user.LastName</td>
+                            <td>@user.UserName</td>
+                            <td>
+                                <a class="btn btn-danger">
+                                    Forget password
+                                </a>
+                            </td>
+                        </tr>
+                     
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+
+    </div>
 @* 
     
     <!-- Page Heading -->
